@@ -42,22 +42,22 @@ class TaskPagesTests(TestCase):
     def test_pages_uses_correct_template(self):
         """URL-адрес использует соответствующий шаблон."""
         templates_pages_names = {
-            "posts/index.html": reverse("posts:index"),
-            "posts/profile.html": reverse(
+            reverse("posts:index"): "posts/index.html",
+            reverse(
                 "posts:profile", kwargs={"username": "auth"}
-            ),
-            "posts/post_detail.html": reverse(
+            ): "posts/profile.html",
+            reverse(
                 "posts:post_detail", kwargs={"post_id": 1}
-            ),
-            "posts/create_post.html": reverse(
+            ): "posts/post_detail.html",
+            reverse(
                 "posts:post_edit", kwargs={"post_id": 1}
-            ),
-            "posts/create_post.html": reverse("posts:post_create"),
-            "posts/group_list.html": (
-                reverse("posts:group_list", kwargs={"slug": "test-slug"})
-            ),
+            ): "posts/create_post.html",
+            reverse("posts:post_create"): "posts/create_post.html",
+            reverse(
+                "posts:group_list", kwargs={"slug": "test-slug"}
+            ): "posts/group_list.html",
         }
-        for template, reverse_name in templates_pages_names.items():
+        for reverse_name, template in templates_pages_names.items():
             with self.subTest(reverse_name=reverse_name):
                 response = self.authorized_client.get(reverse_name)
                 self.assertTemplateUsed(response, template)
@@ -110,18 +110,18 @@ class TaskPagesTests(TestCase):
 
     def test_existing_post_some_pages(self):
         tests_pages = {
-            "posts/index.html": reverse("posts:index"),
-            "posts/group_list.html": (
-                reverse("posts:group_list", kwargs={"slug": "test-slug"})
-            ),
-            "posts/profile.html": reverse(
+            reverse("posts:index"): "posts/index.html",
+            reverse(
+                "posts:group_list", kwargs={"slug": "test-slug"}
+            ): "posts/group_list.html",
+            reverse(
                 "posts:profile", kwargs={"username": "auth"}
-            ),
-            "posts/group_list.html": (
-                reverse("posts:group_list", kwargs={"slug": "test-slug-2"})
-            ),
+            ): "posts/profile.html",
+            reverse(
+                "posts:group_list", kwargs={"slug": "test-slug-2"}
+            ): "posts/group_list.html",
         }
-        for template, page in tests_pages.items():
+        for page, template in tests_pages.items():
             with self.subTest(page=page):
                 response = self.authorized_client.get(page)
                 result = False
