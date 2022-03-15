@@ -3,6 +3,7 @@ from ..forms import PostForm
 from ..models import Post
 from django.test import Client, TestCase
 from django.urls import reverse
+from django.http import HttpResponse
 
 User = get_user_model()
 
@@ -23,6 +24,20 @@ class PostCreateFormTests(TestCase):
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
 
+    def test_not_create_post(self):
+        """Неавторизованный пользователь не может создать запись Post."""
+        posts_count = Post.objects.count()
+        form_data = {
+            "text": "Тестовый текст, который не будет опубликован",
+        }
+        response = self.guest_client.post(
+            reverse("posts:post_create"), data=form_data, follow=True
+        )
+        self.assertRedirects(
+            response, f'{reverse("users:login")}?next={reverse("posts:post_create")}', status_code=302
+        )
+        self.assertEqual(Post.objects.count(), posts_count)
+        
     def test_create_post(self):
         """Валидная форма создает запись Post."""
         posts_count = Post.objects.count()
