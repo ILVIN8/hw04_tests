@@ -3,7 +3,6 @@ from ..forms import PostForm
 from ..models import Post
 from django.test import Client, TestCase
 from django.urls import reverse
-from django.http import HttpResponse
 
 User = get_user_model()
 
@@ -34,10 +33,12 @@ class PostCreateFormTests(TestCase):
             reverse("posts:post_create"), data=form_data, follow=True
         )
         self.assertRedirects(
-            response, f'{reverse("users:login")}?next={reverse("posts:post_create")}', status_code=302
+            response,
+            f'{reverse("users:login")}?next={reverse("posts:post_create")}',
+            status_code=302,
         )
         self.assertEqual(Post.objects.count(), posts_count)
-        
+
     def test_create_post(self):
         """Валидная форма создает запись Post."""
         posts_count = Post.objects.count()

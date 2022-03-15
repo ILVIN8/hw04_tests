@@ -33,18 +33,32 @@ class TaskPagesTests(TestCase):
                 )
             )
         cls.post = Post.objects.get(id=1)
-        cls.index_url = (reverse("posts:index"), 'posts/index.html')
-        cls.group_url = (reverse("posts:group_list", kwargs={"slug": cls.group.slug}), 'posts/group_list.html')
-        cls.group_url_2 = (reverse("posts:group_list", kwargs={"slug": cls.group2.slug}), 'posts/group_list.html')
-        cls.profile_url = (reverse("posts:profile", kwargs={"username": cls.user.username}), 'posts/profile.html')
-        cls.post_url = (reverse("posts:post_detail", kwargs={"post_id": cls.post.id}), 'posts/post_detail.html')
-        cls.new_post_url = (reverse("posts:post_create"), 'posts/create_post.html')
-        cls.edit_post_url = (reverse("posts:post_edit", kwargs={"post_id": cls.post.id}), 'posts/create_post.html')
-        cls.paginated_urls = (
-            cls.index_url,
-            cls.group_url,
-            cls.profile_url
+        cls.index_url = (reverse("posts:index"), "posts/index.html")
+        cls.group_url = (
+            reverse("posts:group_list", kwargs={"slug": cls.group.slug}),
+            "posts/group_list.html",
         )
+        cls.group_url_2 = (
+            reverse("posts:group_list", kwargs={"slug": cls.group2.slug}),
+            "posts/group_list.html",
+        )
+        cls.profile_url = (
+            reverse("posts:profile", kwargs={"username": cls.user.username}),
+            "posts/profile.html",
+        )
+        cls.post_url = (
+            reverse("posts:post_detail", kwargs={"post_id": cls.post.id}),
+            "posts/post_detail.html",
+        )
+        cls.new_post_url = (
+            reverse("posts:post_create"),
+            "posts/create_post.html",
+        )
+        cls.edit_post_url = (
+            reverse("posts:post_edit", kwargs={"post_id": cls.post.id}),
+            "posts/create_post.html",
+        )
+        cls.paginated_urls = (cls.index_url, cls.group_url, cls.profile_url)
 
     def setUp(self):
         self.guest_client = Client()

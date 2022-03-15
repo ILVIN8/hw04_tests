@@ -22,18 +22,18 @@ class PostURLTests(TestCase):
             author=cls.user,
             text="Тестовый текст поста",
         )
-        cls.post_edit_url = f'/posts/{cls.post.id}/edit/'
+        cls.post_edit_url = f"/posts/{cls.post.id}/edit/"
         cls.public_urls = (
-            ('/', 'posts/index.html'),
-            (f'/group/{cls.group.slug}/', 'posts/group_list.html'),
-            (f'/profile/{cls.user.username}/', 'posts/profile.html'),
-            (f'/posts/{cls.post.id}/', 'posts/post_detail.html'),
+            ("/", "posts/index.html"),
+            (f"/group/{cls.group.slug}/", "posts/group_list.html"),
+            (f"/profile/{cls.user.username}/", "posts/profile.html"),
+            (f"/posts/{cls.post.id}/", "posts/post_detail.html"),
         )
         cls.private_urls = (
-            ('/create/', 'posts/create_post.html'),
-            (cls.post_edit_url, 'posts/create_post.html')
+            ("/create/", "posts/create_post.html"),
+            (cls.post_edit_url, "posts/create_post.html"),
         )
-        cls.unexisting_urls = ('/unexisting_page/')
+        cls.unexisting_urls = "/unexisting_page/"
 
     def setUp(self):
         self.guest_client = Client()
